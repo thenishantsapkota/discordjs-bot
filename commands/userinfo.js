@@ -32,6 +32,7 @@ module.exports = {
           .join(" ")
       )
       .join(", ")
+
     const userEmbed = new MessageEmbed()
       .setColor(`${member.displayHexColor}`)
       .setAuthor(`Userinfo of ${user.tag}`)
@@ -59,7 +60,6 @@ module.exports = {
         { name: "Permissions", value: permissions },
         { name: "Roles", value: roles }
       )
-
     await interaction.reply({ embeds: [userEmbed], ephemeral: true })
   },
 }

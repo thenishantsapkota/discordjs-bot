@@ -50,7 +50,7 @@ module.exports = {
         },
         {
           name: "Premium Tier",
-          value: `${interaction.guild.premiumTier.replace("_", " ")}`,
+          value: `${interaction.guild.premiumTier.replace("_", " ") ?? "None"}`,
           inline: true,
         },
         {
@@ -60,7 +60,7 @@ module.exports = {
         },
         {
           name: "Vanity URL Code",
-          value: `${interaction.guild.vanityURLCode}`,
+          value: `${interaction.guild.vanityURLCode ?? "None"}`,
           inline: true,
         }
       )

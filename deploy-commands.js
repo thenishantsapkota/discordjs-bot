@@ -1,34 +1,26 @@
-const { SlashCommandBuilder } = require("@discordjs/builders")
+const fs = require("fs")
 const { REST } = require("@discordjs/rest")
 const { Routes } = require("discord-api-types/v9")
-const { clientId, guildId, token } = require("./config.json")
+const { clientId, guildId, guildId2, token } = require("./config.json")
 
-const commands = [
-  new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("Replies with pong!"),
-  new SlashCommandBuilder()
-    .setName("server")
-    .setDescription("Replies with server info!"),
-  new SlashCommandBuilder()
-    .setName("leanbow")
-    .setDescription("Replies with something sus!"),
-  new SlashCommandBuilder()
-    .setName("user")
-    .setDescription("Returns info about a user")
-    .addUserOption((option) =>
-      option
-        .setName("user")
-        .setDescription("User to get info")
-        .setRequired(false)
-    ),
-].map((command) => command.toJSON())
+const commands = []
+const commandFiles = fs
+  .readdirSync("./commands")
+  .filter((file) => file.endsWith(".js"))
+
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`)
+  commands.push(command.data.toJSON())
+}
 
 const rest = new REST({ version: "9" }).setToken(token)
 
 ;(async () => {
   try {
     await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+      body: commands,
+    })
+    await rest.put(Routes.applicationGuildCommands(clientId, guildId2), {
       body: commands,
     })
 
