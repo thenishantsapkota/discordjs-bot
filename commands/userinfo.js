@@ -18,6 +18,7 @@ module.exports = {
     const roles = member.roles.cache
       .sort((a, b) => b.position - a.position)
       .map((r) => r)
+      .slice(0, -1)
       .join(",")
 
     const permissions = member

@@ -1,3 +1,4 @@
+const { Mutes } = require("../models")
 module.exports = {
   name: "ready",
   once: true,
@@ -7,5 +8,7 @@ module.exports = {
       status: "dnd",
     })
     console.log(`Ready! Logged in as ${client.user.tag}`)
+    Mutes.sync()
+    console.log("Synced Mutes")
   },
 }
